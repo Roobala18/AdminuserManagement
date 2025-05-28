@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: black;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 60px auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .header h2 {
+            color: white;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #007bff, #00c6ff);
+            border: none;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #0056b3, #00a3cc);
+        }
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+        .table thead {
+            background: linear-gradient(90deg, #007bff, #00c6ff);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>Project List</h2>
+        <div>
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-primary me-2">
+                &larr; Back to Dashboard
+            </a>
+            <a href="{% url 'add_project' %}" class="btn btn-primary">+ Add Project</a>
+        </div>
+    </div>
+
+    <div class="card p-4">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Hours</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Progress</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Members</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td>{{ project.name }}</td>
+                    <td>{{ project.hours }}</td>
+                    <td>{{ project.priority }}</td>
+                    <td>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar" role="progressbar" style="width: {{ project.progress }}%;" aria-valuenow="{{ project.progress }}" aria-valuemin="0" aria-valuemax="100">
+                                {{ project.progress }}%
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ project.status }}</td>
+                    <td>
+                        {% for member in project.members.all %}
+                            <span class="badge bg-secondary">{{ member.name }}</span>
+                        {% empty %}
+                            <span class="text-muted">No members</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

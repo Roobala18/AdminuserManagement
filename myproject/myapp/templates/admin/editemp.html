@@ -1,0 +1,98 @@
+{% load form_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit User | Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f1f4f9;
+    }
+    .form-container {
+      max-width: 700px;
+      margin: 50px auto;
+    }
+    .card {
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+    .form-control {
+      border-radius: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container form-container">
+  <div class="card p-4">
+    <h3 class="text-center mb-4">✏️ Edit User - {{ user.username }}</h3>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <h5 class="mb-3">User Info</h5>
+      <div class="mb-3">
+        <label for="id_username" class="form-label">Username</label>
+        {{ user_form.username|add_class:"form-control" }}
+      </div>
+
+      <div class="mb-3">
+        <label for="id_email" class="form-label">Email</label>
+        {{ user_form.email|add_class:"form-control" }}
+      </div>
+
+      <div class="mb-3">
+        <label for="id_password" class="form-label">New Password</label>
+        {{ user_form.password|add_class:"form-control" }}
+        <div class="form-text">Leave this blank to keep the current password.</div>
+      </div>
+{% comment %} 
+      <h5 class="mb-3 mt-4">Profile Info</h5>
+      <div class="mb-3">
+        <label for="id_full_name" class="form-label">Full Name</label>
+        {{ profile_form.full_name|add_class:"form-control" }}
+      </div>
+
+      <div class="mb-3">
+        <label for="id_age" class="form-label">Age</label>
+        {{ profile_form.age|add_class:"form-control" }}
+      </div>
+
+      <div class="mb-3">
+        <label for="id_qualification" class="form-label">Qualification</label>
+        {{ profile_form.qualification|add_class:"form-control" }}
+      </div>
+
+      <div class="mb-3">
+        <label for="id_date_of_joining" class="form-label">Date of Joining</label>
+        {{ profile_form.date_of_joining|add_class:"form-control" }}
+      </div>
+
+      <div class="mb-3">
+        <label for="id_address" class="form-label">Address</label>
+        {{ profile_form.address|add_class:"form-control" }}
+      </div>
+
+      <div class="mb-3">
+        <label for="id_marital_status" class="form-label">Marital Status</label>
+        {{ profile_form.marital_status|add_class:"form-control" }}
+      </div> {% endcomment %}
+
+      <button type="submit" class="btn btn-success w-100 mt-3">Update User</button>
+      <a href="{% url 'admin_dashboard' %}" class="btn btn-link d-block text-center mt-2">← Back to Dashboard</a>
+    </form>
+
+  </div>
+</div>
+</body>
+</html>
